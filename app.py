@@ -61,7 +61,6 @@ if uploaded_file is not None:
             alvo_mensal = alvo[alvo['Data Emissão'].dt.month == mes]
             
             if alvo_mensal.empty == False:
-                st.write('############################################################################')
                 st.write('No mês {} o contribuinte emitiu {}  nota(s) relativa(s) a {} código(s) de atividade(s):'.format(mes,len(alvo_mensal['Nº Sequencial']),alvo_mensal['Atividade'].nunique()))
                 #atividades = alvo['Atividade'].unique()
                 atividades = alvo_mensal['Atividade'].unique()
