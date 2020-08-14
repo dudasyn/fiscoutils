@@ -3,15 +3,15 @@ import pandas as pd
 import numpy as np
 import pickle
 
-#st.set_option('deprecation.showfileUploaderEncoding', False)
-#df = pd.read_excel("/mnt/c/Users/lemmo/Google Drive/Auditoria Fiscal/Operacional/Análises/Reg.xlsx")
-df = pd.read_excel("./Reg.xlsx")
+st.set_option('deprecation.showfileUploaderEncoding', False)
+df = pd.read_excel("/mnt/c/Users/lemmo/Google Drive/Auditoria Fiscal/Operacional/Análises/Reg.xlsx")
+#df = pd.read_excel("./Reg.xlsx")
 
 df['CODIGO'] = df['CODIGO'].astype(str)
 df['RETENÇÃO NA FONTE'] = df['RETENÇÃO NA FONTE'].replace(np.nan,'Completa a tabela com o pdf original')
 def resultado(df1, idx):    
     string = ''
-    if len(df.index)!= 0:
+    if len(df1.index)!= 0:
         string += '\nServiço: ' + df1['TITULO'].iloc[idx]
         string += '\n\nExceção na LC 116?: ' + df1['EXCECAO'].iloc[idx]
         string += '\n\nLocal da Prestação: ' + df1['LOCALDAPRESTACAOPJ'].iloc[idx]
@@ -75,8 +75,10 @@ if uploaded_file is not None:
 
     atividades = alvo['Atividade'].unique()
     for atividade in atividades:
-        code = atividade[0:5]
+
+        code = str(float(atividade[0:5]))
         idx = df.loc[df['CODIGO'] == code].index.values[0]
+        st.write(idx)
         st.write('\n')
         st.write('CÓDIGO: {}'.format(code))
         st.write(resultado(df,idx))
