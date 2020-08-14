@@ -1,8 +1,9 @@
-# Penguins web app deployed on Heroku
+# FISCOUTILS
 
-The deployed web app is live at https://dp-penguins.herokuapp.com/
+O Deploy deste web app está ativo em https://fiscoutils.herokuapp.com/ 
 
-This web app predicts the species of penguins as a function of their input parameters (bill length, bill width, flipper length, body mass, sex and island).
+Aplicativo para gerenciar relatórios do sistema interno do fisco municipal de Duque de Caxias
+Utiliza o streamlit como webserver
 
 The web app was built in Python using the following libraries:
 * streamlit
@@ -10,3 +11,4 @@ The web app was built in Python using the following libraries:
 * numpy
 * scikit-learn
 * pickle
+* xlrd

@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
-
+#st.set_option('deprecation.showfileUploaderEncoding', False)
 #df = pd.read_excel("/mnt/c/Users/lemmo/Google Drive/Auditoria Fiscal/Operacional/Análises/Reg.xlsx")
 df = pd.read_excel("./Reg.xlsx")
 
@@ -25,7 +25,7 @@ def resultado(df1, idx):
 
 
 
-st.set_option('deprecation.showfileUploaderEncoding', False)
+
 
 st.write("""
 # FISCO UTILS
