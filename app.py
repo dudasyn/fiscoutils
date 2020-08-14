@@ -29,7 +29,7 @@ st.write("""
 """)
 st.sidebar.header('CARREGUE O RELATÓRIO')
 
-def render_notas_fiscais_emitidas_rel():
+def render_notas_fiscais_emitidas():
     st.write('RELATÓRIO DE NOTAS FISCAIS EMITIDAS PELO PRESTADOR')
     input_df = pd.read_excel(uploaded_file)
     alvo = input_df
@@ -39,7 +39,6 @@ def render_notas_fiscais_emitidas_rel():
           'ITEM LC 116/2003', 'Imposto Retido', 'TOTAL_IMPOSTO',
         'Tributado Município', 'Retido','Descrição dos Serviços']
     alvo = alvo[filtro]
-    alvo_tomador_caxias = alvo[alvo['Cidade Tomador']=='Duque de Caxias']
 
     def loopa(data):
         for mes in range(1,13):
@@ -68,23 +67,42 @@ def render_notas_fiscais_emitidas_rel():
         st.write(resultado(df,idx))
 
 
-def render_outro_relatorio():
-    st.write('Outro Relatório')
-#COUNTRIES_SELECTED = st.multiselect('Select countries', ['Ola','enfermeira'])
-relatorios_possiveis = ('Relatório de Notas Emitidas','Outros Relatórios')
+
+def render_agregados_por_item():
+    st.write('Agregados úteis')
+    input_df = pd.read_excel(uploaded_file)
+    alvo = input_df
+
+    st.write('TOTAL POR ITEM DA LEI COMPLEMENTAR:')
+    st.write(alvo[ ['ITEM LC 116/2003','Valor Documento',  'Imposto Retido', 'TOTAL_IMPOSTO']].groupby('ITEM LC 116/2003').sum())
+    st.write('TOTAL POR MUNICÍPIO TOMADOR:')
+    st.write(alvo[ ['Cidade Tomador','Valor Documento', 'Imposto Retido', 'TOTAL_IMPOSTO']].groupby('Cidade Tomador').sum())
+    st.write('TOTAL POR MÊS:')
+    st.write(alvo[ ['Data Emissão','Valor Documento', 'Imposto Retido', 'TOTAL_IMPOSTO']].groupby([alvo['Data Emissão'].dt.month]).sum())
+
+   # df['birthdate'].groupby([df.birthdate.dt.year, df.birthdate.dt.month]).agg('count')
+
+    #st.write(alvo['Cidade Tomador','Valor Documento', 'Valor Tributável', 'Imposto Retido', 'TOTAL_IMPOSTO'].groupby('Cidade Tomador').sum())
+    
+
+
+relatorios_possiveis = ('Notas emitidas por ano','Agregados por item')
 option = st.sidebar.selectbox('Qual relatório você quer analisar?',relatorios_possiveis)
 uploaded_file = st.sidebar.file_uploader("Faça o Upload", type=["xlsx"])
-if option=='Relatório de Notas Emitidas':
+
+
+if option=='Notas emitidas por ano':
     if uploaded_file is not None:
-        render_notas_fiscais_emitidas_rel()
+        render_notas_fiscais_emitidas()
     else:
         st.write('Carregue o arquivo -de relatório de {}'.format(option))
         #st.write(input_df)
-if option =='Outros Relatórios':
+
+if option =='Agregados por item':
 
     if uploaded_file is not None:
-        render_outro_relatorio()
+        render_agregados_por_item()
     else:
-        st.write('Carregue o arquivo -de relatório de {}'.format(option))
+        st.write('Arquivo não carregado')
         #st.write(input_df)
 
