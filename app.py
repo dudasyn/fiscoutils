@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 import pickle
 
-st.set_option('deprecation.showfileUploaderEncoding', False)
-df = pd.read_excel("/mnt/c/Users/lemmo/Google Drive/Auditoria Fiscal/Operacional/Análises/Reg.xlsx")
-#df = pd.read_excel("./Reg.xlsx")
+#st.set_option('deprecation.showfileUploaderEncoding', False)
+#df = pd.read_excel("/mnt/c/Users/lemmo/Google Drive/Auditoria Fiscal/Operacional/Análises/Reg.xlsx")
+df = pd.read_excel("./Reg.xlsx")
 
 df['CODIGO'] = df['CODIGO'].astype(str)
 df['RETENÇÃO NA FONTE'] = df['RETENÇÃO NA FONTE'].replace(np.nan,'Completa a tabela com o pdf original')
