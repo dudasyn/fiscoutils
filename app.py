@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
-#st.set_option('deprecation.showfileUploaderEncoding', False)
+st.set_option('deprecation.showfileUploaderEncoding', False)
 #df = pd.read_excel("/mnt/c/Users/lemmo/Google Drive/Auditoria Fiscal/Operacional/Análises/Reg.xlsx")
 df = pd.read_excel("./Reg.xlsx")
 
@@ -23,11 +23,10 @@ def resultado(df1, idx):
         return 'Codigo não encontrado'
     return string
 
-st.write("""
-# Interpretador de Relatórios da Equipe do Simples Nacional
 
-""")
+# Interpretador de Relatórios da Equipe do Simples Nacional
 st.sidebar.header('CARREGUE O RELATÓRIO')
+uploaded_file = st.sidebar.file_uploader("Upload do relatório em xlsx", type=["xlsx"])
 
 def render_notas_fiscais_emitidas():
     st.write('RELATÓRIO DE NOTAS FISCAIS EMITIDAS PELO PRESTADOR')
@@ -66,8 +65,6 @@ def render_notas_fiscais_emitidas():
         st.write('CÓDIGO: {}'.format(code))
         st.write(resultado(df,idx))
 
-
-
 def render_agregados_por_item():
     st.write('Agregados úteis')
     input_df = pd.read_excel(uploaded_file)
@@ -80,22 +77,35 @@ def render_agregados_por_item():
     st.write('TOTAL POR MÊS:')
     st.write(alvo[ ['Data Emissão','Valor Documento', 'Imposto Retido', 'TOTAL_IMPOSTO']].groupby([alvo['Data Emissão'].dt.month]).sum())
 
-   # df['birthdate'].groupby([df.birthdate.dt.year, df.birthdate.dt.month]).agg('count')
-
-    #st.write(alvo['Cidade Tomador','Valor Documento', 'Valor Tributável', 'Imposto Retido', 'TOTAL_IMPOSTO'].groupby('Cidade Tomador').sum())
+def render_analise_cancelamento():
+    st.write('Análise de solicitação de cancelamento')
+    input_df = pd.read_excel(uploaded_file)
+    alvo = input_df
+    st.write(alvo)
     
+    '''
+        ***Lorem*** ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et <br><br>
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+        Arquivos: Relatório de Notas Emitidas Pelo Prestador, Realatório de Análise de Solicitação de cancelamento
+
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+        sunt in culpa qui officia deserunt mollit anim id est laborum."
+    '''
 
 
-relatorios_possiveis = ('Notas emitidas por ano','Agregados por item')
-option = st.sidebar.selectbox('Qual relatório você quer analisar?',relatorios_possiveis)
-uploaded_file = st.sidebar.file_uploader("Faça o Upload", type=["xlsx"])
+#if st.button('RELATÓRIO DE NOTAS EMITIDAS'):
+#    option = st.sidebar.selectbox('Relatório de Notas Emitidas pelo prestador',('Notas emitidas por ano','Agregados por item'))
+option = st.sidebar.selectbox('Relatório de Notas Emitidas pelo prestador',('Notas emitidas por ano','Agregados por item'))
 
 
 if option=='Notas emitidas por ano':
     if uploaded_file is not None:
         render_notas_fiscais_emitidas()
     else:
-        st.write('Carregue o arquivo -de relatório de {}'.format(option))
+        st.write("""
+                        # Interpretador de Relatórios da Equipe do Simples Nacional
+                """)
+        st.write('Carregue o arquivo - de relatório de {}'.format(option))
         #st.write(input_df)
 
 if option =='Agregados por item':
@@ -105,4 +115,5 @@ if option =='Agregados por item':
     else:
         st.write('Arquivo não carregado')
         #st.write(input_df)
+
 
