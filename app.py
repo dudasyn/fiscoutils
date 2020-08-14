@@ -23,29 +23,15 @@ def resultado(df1, idx):
         return 'Codigo não encontrado'
     return string
 
-
-
-
-
 st.write("""
-# FISCO UTILS
-Relatórios inteligentes
+# Interpretador de Relatórios da Equipe do Simples Nacional
 
 """)
-
 st.sidebar.header('CARREGUE O RELATÓRIO')
 
-st.write('Relatório de Notas Fiscais Emitidas pelo prestador')
-
-#st.sidebar.markdown("""
-#[Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/penguins_example.csv)
-#""")
-
-# Collects user input features into dataframe
-uploaded_file = st.sidebar.file_uploader("Faça o Upload", type=["xlsx"])
-if uploaded_file is not None:
+def render_notas_fiscais_emitidas_rel():
+    st.write('RELATÓRIO DE NOTAS FISCAIS EMITIDAS PELO PRESTADOR')
     input_df = pd.read_excel(uploaded_file)
-    
     alvo = input_df
     st.write(input_df)
    
@@ -74,17 +60,31 @@ if uploaded_file is not None:
 
     atividades = alvo['Atividade'].unique()
     for atividade in atividades:
-
         code = str(float(atividade[0:5]))
         idx = df.loc[df['CODIGO'] == code].index.values[0]
         st.write(idx)
         st.write('\n')
         st.write('CÓDIGO: {}'.format(code))
         st.write(resultado(df,idx))
-else:
-    st.write('Carregue o arquivo - Relatório de Notas fiscais Emitidas pelo contribuinte para análise')
-    #st.write(input_df)
 
-#input_df.columns
 
+def render_outro_relatorio():
+    st.write('Outro Relatório')
+#COUNTRIES_SELECTED = st.multiselect('Select countries', ['Ola','enfermeira'])
+relatorios_possiveis = ('Relatório de Notas Emitidas','Outros Relatórios')
+option = st.sidebar.selectbox('Qual relatório você quer analisar?',relatorios_possiveis)
+uploaded_file = st.sidebar.file_uploader("Faça o Upload", type=["xlsx"])
+if option=='Relatório de Notas Emitidas':
+    if uploaded_file is not None:
+        render_notas_fiscais_emitidas_rel()
+    else:
+        st.write('Carregue o arquivo -de relatório de {}'.format(option))
+        #st.write(input_df)
+if option =='Outros Relatórios':
+
+    if uploaded_file is not None:
+        render_outro_relatorio()
+    else:
+        st.write('Carregue o arquivo -de relatório de {}'.format(option))
+        #st.write(input_df)
 
