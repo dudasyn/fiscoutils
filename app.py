@@ -33,7 +33,9 @@ Relatórios inteligentes
 
 """)
 
-st.sidebar.header('Aqui é o Header')
+st.sidebar.header('CARREGUE O RELATÓRIO')
+
+st.write('Relatório de Notas Fiscais Emitidas pelo prestador')
 
 #st.sidebar.markdown("""
 #[Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/penguins_example.csv)
